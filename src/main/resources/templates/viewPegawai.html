@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View Pegawai</title>
+
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+
+</head>
+<body>
+    <nav th:replace="fragments/fragment :: navbar"></nav>
+
+    <h3 th:text="'Lihat Data Pegawai - ' + ${pegawai.nip}"></h3>
+        <div class = "card text-center">
+            <div class = "card-body">
+                <h5 class = "card-title" th:text="${pegawai.nama}"></h5>
+                <p class="card-text" th:text="${pegawai.tempatLahir} + ', ' + ${pegawai.tanggalLahir}"></p>
+                <p class="card-text" th:text="'Pegawai bekerja di ' + ${pegawai.instansi.nama} + ' - ' + ${pegawai.instansi.provinsi.nama}"></p>
+                <p class="card-text" th:text="'Sejak ' + ${pegawai.tahunMasuk}"></p>
+                <p class="card-text">
+                        <span th:each = "jabatan, iterStat : ${pegawai.listJabatan}">
+                            <strong><a th:text = "${jabatan.nama}"></a></strong>
+                            <a th:if = "${iterStat.last} == false" th:text = "'| '"></a>
+                        </span>
+                </p>
+                <form th:action = "@{pegawai/ubah}" class = "form-inline" method = "GET">
+                    <input type = "hidden" th:value = "${pegawai.nip}" name = "nip"></input>
+                    <button class = "btn btn-info mb-2" type = "submit">Ubah</button>
+                </form>
+            </div>
+            <div class = "card-footer text-muted">
+                <a th:text = "'Gaji: Rp' + ${gaji}"></a>
+            </div>
+        </div>
+</body>
+</html>
